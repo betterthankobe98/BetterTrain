@@ -12,6 +12,7 @@ struct BetterTrainApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(for: WorkoutRecord.self)
         }
     }
 }
