@@ -29,6 +29,16 @@ class WorkoutRecord {
     var totalEffectiveSets: Int {
         exercises.reduce(0) { $0 + $1.effectiveSetCount }
     }
+    
+    // 总次数
+    var totalReps: Int {
+        exercises.reduce(0) { $0 + $1.totalReps }
+    }
+    
+    // 总组数
+    var totalSets: Int {
+        exercises.reduce(0) { $0 + $1.sets.count }
+    }
 }
 
 

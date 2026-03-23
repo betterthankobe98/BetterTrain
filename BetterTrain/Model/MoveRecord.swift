@@ -13,13 +13,11 @@ class MoveRecord {
     var exerciseName: String
     var targetMusclePart: [MusclePart]
     var sets: [SetRecord]
-    var isComplete: Bool
     
-    init(targetMusclePart: [MusclePart], exerciseName: String, sets: [SetRecord], isComplete: Bool = false) {
-        self.targetMusclePart = [.chestInner]
+    init(targetMusclePart: [MusclePart], exerciseName: String, sets: [SetRecord]) {
+        self.targetMusclePart = targetMusclePart
         self.exerciseName = exerciseName
         self.sets = sets
-        self.isComplete = isComplete
     }
     
     // 动作总容量
