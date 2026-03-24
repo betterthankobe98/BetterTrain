@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct MoveDetail: View {
-    var exercise: MoveRecord
+struct MoveView: View {
+    
+    // MARK: Data Share With Me
+    @Bindable var exercise: MoveRecord
     
     var body: some View {
         ScrollView {
@@ -99,8 +101,8 @@ struct MoveDetail: View {
     }
 }
 
-#Preview {
-    MoveDetail(exercise: MoveRecord(
+#Preview(traits: .swiftData) {
+    MoveView(exercise: MoveRecord(
         targetMusclePart: [.chestMiddle, .chestOuter],
         exerciseName: "杠铃平板卧推",
         sets: [

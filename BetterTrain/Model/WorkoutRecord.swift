@@ -14,7 +14,7 @@ class WorkoutRecord {
     var time: Date
     @Relationship(deleteRule: .cascade) var exercises: [MoveRecord]
     
-    init(targetMuscle: Muscle, time: Date, exercises: [MoveRecord]) {
+    init(targetMuscle: Muscle = .chest, time: Date = .now, exercises: [MoveRecord] = []) {
         self.targetMuscle = targetMuscle
         self.time = time
         self.exercises = exercises

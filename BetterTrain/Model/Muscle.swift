@@ -5,10 +5,15 @@
 //  Created by 王峥 on 2026/3/21.
 //
 
-enum Muscle: String, Codable {
+enum Muscle: String, Codable, CaseIterable {
     case chest
     case back
     case leg
+    case abs
+    case glute
+    case shoulder
+    case bicep
+    case tricep
 }
 
 enum MusclePart: String, Codable {
@@ -50,6 +55,11 @@ extension Muscle {
         case .chest: return "胸"
         case .back: return "背"
         case .leg: return "腿"
+        case .abs: return "腹"
+        case .glute: return "臀"
+        case .shoulder: return "肩"
+        case .bicep: return "二头肌"
+        case .tricep: return "三头肌"
         }
     }
 }

@@ -7,23 +7,22 @@
 
 import SwiftUI
 
-struct MoveRowView: View {
-    var move: MoveRecord
+struct WorkoutRow: View {
+
+    // MARK: Data Share With Me
+    let move: MoveRecord
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            
             // 动作名
             Text(move.exerciseName)
                 .font(.headline)
-            
             // 目标肌群
             Text(move.targetMusclePart
                 .map { $0.displayName }
                 .joined(separator: ", "))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-            
             // 核心指标
             HStack {
                 Text("容量: \(Int(move.totalVolume))")
@@ -38,8 +37,8 @@ struct MoveRowView: View {
     }
 }
 
-#Preview {
-    MoveRowView(move: MoveRecord(
+#Preview(traits: .swiftData) {
+    WorkoutRow(move: MoveRecord(
         targetMusclePart: [.chestMiddle, .chestOuter],
         exerciseName: "杠铃平板卧推",
         sets: [

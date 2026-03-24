@@ -11,7 +11,7 @@ import SwiftUI
 struct BetterTrainApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeNavigate()
                 .modelContainer(for: WorkoutRecord.self)
         }
     }

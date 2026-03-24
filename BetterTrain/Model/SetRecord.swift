@@ -16,7 +16,7 @@ class SetRecord {
     var reps: Int
     var rir: Int?   // 主观强度:还能做几次
     
-    init(order: Int, isWarmup: Bool, weight: Double, reps: Int, rir: Int? = nil) {
+    init(order: Int = 1, isWarmup: Bool = true, weight: Double = 20, reps: Int = 8, rir: Int? = nil) {
         self.order = order
         self.isWarmup = isWarmup
         self.weight = weight

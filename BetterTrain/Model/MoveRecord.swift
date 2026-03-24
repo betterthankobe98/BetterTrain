@@ -14,7 +14,7 @@ class MoveRecord {
     var targetMusclePart: [MusclePart]
     var sets: [SetRecord]
     
-    init(targetMusclePart: [MusclePart], exerciseName: String, sets: [SetRecord]) {
+    init(targetMusclePart: [MusclePart] = [.chestMiddle], exerciseName: String = "请编辑动作", sets: [SetRecord] = []) {
         self.targetMusclePart = targetMusclePart
         self.exerciseName = exerciseName
         self.sets = sets
