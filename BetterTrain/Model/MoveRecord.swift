@@ -14,7 +14,7 @@ class MoveRecord {
     var targetMusclePart: [MusclePart]
     var sets: [SetRecord]
     
-    init(targetMusclePart: [MusclePart] = [.chestMiddle], exerciseName: String = "请编辑动作", sets: [SetRecord] = []) {
+    init(targetMusclePart: [MusclePart] = [.chestMiddle], exerciseName: String = "", sets: [SetRecord] = []) {
         self.targetMusclePart = targetMusclePart
         self.exerciseName = exerciseName
         self.sets = sets
@@ -27,7 +27,7 @@ class MoveRecord {
     
     // 动作有效组数（最关键指标之一）
     var effectiveSetCount: Int {
-        sets.filter { ($0.rir ?? 5) <= 3 }.count
+        sets.filter { ($0.rir) <= 3 }.count
     }
     
     // 平均 RIR（强度判断）
@@ -59,5 +59,10 @@ class MoveRecord {
     var oneRepMaxEstimate: Double {
         guard let bestSet = sets.max(by: { $0.weight < $1.weight }) else { return 0 }
         return bestSet.weight * (1 + Double(bestSet.reps) / 30)
+    }
+    
+    // 按组排序后的sets
+    var setsSortedByOrder: [SetRecord] {
+        sets.sorted{ $0.order < $1.order }
     }
 }

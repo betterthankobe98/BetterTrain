@@ -15,14 +15,14 @@ struct WorkoutRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // 动作名
-            Text(move.exerciseName)
+            Text(move.exerciseName.isEmpty ? "请编辑动作名称" : move.exerciseName)
                 .font(.headline)
             // 目标肌群
-            Text(move.targetMusclePart
-                .map { $0.displayName }
-                .joined(separator: ", "))
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+//            Text(move.targetMusclePart
+//                .map { $0.displayName }
+//                .joined(separator: ", "))
+//                .font(.subheadline)
+//                .foregroundColor(.secondary)
             // 核心指标
             HStack {
                 Text("容量: \(Int(move.totalVolume))")

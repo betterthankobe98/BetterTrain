@@ -15,15 +15,17 @@ struct RecordRow: View {
         VStack(alignment: .leading, spacing: 10) {
             
             // 顶部：肌群 + 时间
-            HStack {
-                Text(workout.targetMuscle.displayName)
-                    .font(.headline)
-                
-                Spacer()
-                
-                Text(workout.time.formatted(date: .abbreviated, time: .shortened))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+            Section("\(workout.time.formatted(date: .numeric, time: .omitted))") {
+                HStack {
+                    Text(workout.targetMuscle.displayName)
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    Text(workout.time.formatted(date: .abbreviated, time: .shortened))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
             
             // 中间：统计数据

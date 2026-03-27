@@ -41,7 +41,7 @@ struct RecordEditor: View {
                             MoveEditor(move: exercise) { }
                         } label: {
                             VStack(alignment: .leading) {
-                                Text(exercise.exerciseName)
+                                Text(exercise.exerciseName.isEmpty ? "请编辑动作" : exercise.exerciseName)
                                 Text("共 \(exercise.sets.count) 组")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)

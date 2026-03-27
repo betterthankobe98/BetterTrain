@@ -16,7 +16,8 @@ struct HomeNavigate: View {
     
     var body: some View {
         NavigationSplitView {
-            RecordView(workoutRecord: $workoutSelection)
+            RecordView2(workoutRecord: $workoutSelection)
+//            WeekView(workoutRecord: $workoutSelection)
         } content: {
             if let workoutSelection {
                 WorkoutView(workout: workoutSelection, move: $moveRecord)
