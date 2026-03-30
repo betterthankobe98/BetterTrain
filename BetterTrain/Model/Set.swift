@@ -9,14 +9,14 @@ import Foundation
 import SwiftData
 
 @Model
-class SetRecord {
+class Set {
     var order: Int
     var isWarmup: Bool
-    var weight: Double
+    var weight: Double?
     var reps: Int
     var rir: Int = 0   // 主观强度:还能做几次
     
-    init(order: Int = 1, isWarmup: Bool = false, weight: Double = 0, reps: Int = 8, rir: Int = 0) {
+    init(order: Int = 1, isWarmup: Bool = false, weight: Double? = 0, reps: Int = 8, rir: Int = 0) {
         self.order = order
         self.isWarmup = isWarmup
         self.weight = weight
@@ -24,7 +24,11 @@ class SetRecord {
         self.rir = rir
     }
     
-    var volume: Double {
-        weight * Double(reps)
+    var volume: Double? {
+        if let weight {
+            return weight * Double(reps)
+        } else {
+            return nil
+        }
     }
 }

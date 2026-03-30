@@ -10,9 +10,9 @@ import SwiftUI
 struct MoveView: View {
     
     // MARK: Data Share With Me
-    @Bindable var exercise: MoveRecord
+    @Bindable var exercise: Move
     // MARK: Data Owned By Me
-    @State private var setToEdit: SetRecord?
+    @State private var setToEdit: Set?
     
     var body: some View {
         ScrollView {
@@ -108,7 +108,7 @@ struct MoveView: View {
     
     func addGroupButton(for order: Int) -> some View {
         Button("添加一组", systemImage: "plus.circle"){
-            setToEdit = SetRecord(order: order)
+            setToEdit = Set(order: order)
         }
         .sheet(isPresented: showSetEditorSheet) {
             if let setToEdit {
@@ -133,13 +133,13 @@ struct MoveView: View {
         )
     }
     
-    func editSetGroupButton(for set: SetRecord) -> some View {
+    func editSetGroupButton(for set: Set) -> some View {
         Button("编辑", systemImage: "pencil") {
             setToEdit = set
         }
     }
     
-    func deleteSetGroupButton(for set: SetRecord) -> some View {
+    func deleteSetGroupButton(for set: Set) -> some View {
         Button("删除", systemImage: "minus.circle") {
             exercise.sets.removeAll { $0 == set }
         }
@@ -147,15 +147,15 @@ struct MoveView: View {
 }
 
 #Preview(traits: .swiftData) {
-    MoveView(exercise: MoveRecord(
+    MoveView(exercise: Move(
         targetMusclePart: [.chestMiddle, .chestOuter],
         exerciseName: "杠铃平板卧推",
         sets: [
-            SetRecord(order: 1, isWarmup: true, weight: 40, reps: 12),
-            SetRecord(order: 2, isWarmup: false, weight: 60, reps: 10),
-            SetRecord(order: 3, isWarmup: false, weight: 65, reps: 8, rir: 3),
-            SetRecord(order: 4, isWarmup: false, weight: 65, reps: 8, rir: 2),
-            SetRecord(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
+            Set(order: 1, isWarmup: true, weight: 40, reps: 12),
+            Set(order: 2, isWarmup: false, weight: 60, reps: 10),
+            Set(order: 3, isWarmup: false, weight: 65, reps: 8, rir: 3),
+            Set(order: 4, isWarmup: false, weight: 65, reps: 8, rir: 2),
+            Set(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
         ]
     ))
 }

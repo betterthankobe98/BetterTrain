@@ -10,7 +10,7 @@ import SwiftUI
 struct WorkoutRow: View {
 
     // MARK: Data Share With Me
-    let move: MoveRecord
+    let move: Move
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -38,15 +38,15 @@ struct WorkoutRow: View {
 }
 
 #Preview(traits: .swiftData) {
-    WorkoutRow(move: MoveRecord(
+    WorkoutRow(move: Move(
         targetMusclePart: [.chestMiddle, .chestOuter],
         exerciseName: "杠铃平板卧推",
         sets: [
-            SetRecord(order: 1, isWarmup: true, weight: 40, reps: 12),
-            SetRecord(order: 2, isWarmup: false, weight: 60, reps: 10),
-            SetRecord(order: 3, isWarmup: false, weight: 65, reps: 8, rir: 3),
-            SetRecord(order: 4, isWarmup: false, weight: 65, reps: 8, rir: 2),
-            SetRecord(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
+            Set(order: 1, isWarmup: true, weight: 40, reps: 12),
+            Set(order: 2, isWarmup: false, weight: 60, reps: 10),
+            Set(order: 3, isWarmup: false, weight: 65, reps: 8, rir: 3),
+            Set(order: 4, isWarmup: false, weight: 65, reps: 8, rir: 2),
+            Set(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
         ]
     ))
 }

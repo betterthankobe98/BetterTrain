@@ -9,10 +9,10 @@ import SwiftUI
 struct WorkoutView: View {
     
     // MARK: Data Share With Me
-    @Bindable var workout: WorkoutRecord
-    @Binding var move: MoveRecord?
+    @Bindable var workout: Workout
+    @Binding var move: Move?
     // MARK: Data Owned By Me
-    @State private var moveToEdit: MoveRecord?
+    @State private var moveToEdit: Move?
 
     var body: some View {
         List(selection: $move) {
@@ -71,13 +71,13 @@ struct WorkoutView: View {
         .navigationTitle("训练记录: \(workout.targetMuscle.displayName)")
     }
     
-    func editButton(for move: MoveRecord) -> some View {
+    func editButton(for move: Move) -> some View {
         Button("Edit", systemImage: "pencil") {
             moveToEdit = move
         }
     }
     
-    func deleteButton(for move: MoveRecord) -> some View {
+    func deleteButton(for move: Move) -> some View {
         Button("delete", systemImage: "minus") {
             workout.exercises.removeAll { $0 == move }
         }
@@ -85,7 +85,7 @@ struct WorkoutView: View {
         
     var addButton: some View {
         Button("添加", systemImage: "plus") {
-            moveToEdit = MoveRecord()
+            moveToEdit = Move()
         }
         .sheet(isPresented: showMoveEditor) {
             if let moveToEdit {
@@ -114,7 +114,7 @@ struct WorkoutView: View {
 }
 
 #Preview(traits: .swiftData) {
-    @Previewable @State var selec: MoveRecord?
+    @Previewable @State var selec: Move?
     NavigationStack {
         WorkoutView(workout: MyInstance.workout1, move: $selec)
     }

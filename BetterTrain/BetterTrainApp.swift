@@ -12,7 +12,7 @@ struct BetterTrainApp: App {
     var body: some Scene {
         WindowGroup {
             HomeNavigate()
-                .modelContainer(for: WorkoutRecord.self)
+                .modelContainer(for: Workout.self)
         }
     }
 }

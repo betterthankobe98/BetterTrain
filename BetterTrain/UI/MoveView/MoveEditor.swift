@@ -11,18 +11,18 @@ struct MoveEditor: View {
     // MARK: Data (Function) In
     @Environment(\.dismiss) private var dismiss
     // MARK: Data Shared With Me
-    @Bindable var move: MoveRecord
+    @Bindable var move: Move
     // MARK: Action Function
     let onChoose: () -> Void
     // MARK: Data Owned By Me
-    @State private var setToEdit: SetRecord?
+    @State private var setToEdit: Set?
     
     var body: some View {
         NavigationStack {
             Form {
                 TextField("动作名称", text: $move.exerciseName)
                 Button("添加一组", systemImage: "plus.circle") {
-                    setToEdit = SetRecord(order: move.sets.count + 1)
+                    setToEdit = Set(order: move.sets.count + 1)
                 }
                 .sheet(isPresented: showSetEditorSheet) {
                     if let setToEdit {
@@ -77,6 +77,6 @@ struct MoveEditor: View {
 }
 
 #Preview(traits: .swiftData) {
-    @Previewable @State var myMove: MoveRecord = MoveRecord()
+    @Previewable @State var myMove: Move = Move()
     MoveEditor(move: myMove) { }
 }

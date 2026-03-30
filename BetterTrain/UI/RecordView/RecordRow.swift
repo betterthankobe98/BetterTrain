@@ -9,7 +9,7 @@ import SwiftUI
 struct RecordRow: View {
     
     // MARK: Data Share With Me
-    let workout: WorkoutRecord
+    let workout: Workout
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {

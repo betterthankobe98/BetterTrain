@@ -10,7 +10,7 @@ import SwiftUI
 struct SetEditor: View {
     
     // MARK: Data Shared With Me
-    @Bindable var set: SetRecord
+    @Bindable var set: Set
     // MARK: Data (Function) In
     @Environment(\.dismiss) var dismiss
     // MARK: Action Function
@@ -75,5 +75,5 @@ struct SetEditor: View {
 }
 
 #Preview {
-    SetEditor(set: SetRecord()){}
+    SetEditor(set: Set()){}
 }

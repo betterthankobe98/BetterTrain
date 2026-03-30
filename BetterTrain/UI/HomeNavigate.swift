@@ -11,13 +11,13 @@ import SwiftData
 struct HomeNavigate: View {
     
     // MARK: Data Owned By Me
-    @State private var workoutSelection: WorkoutRecord?
-    @State private var moveRecord: MoveRecord?
+    @State private var workoutSelection: Workout?
+    @State private var moveRecord: Move?
     
     var body: some View {
         NavigationSplitView {
-            RecordView2(workoutRecord: $workoutSelection)
-//            WeekView(workoutRecord: $workoutSelection)
+//            RecordView2(workoutRecord: $workoutSelection)
+            RecordView(workoutRecord: $workoutSelection)
         } content: {
             if let workoutSelection {
                 WorkoutView(workout: workoutSelection, move: $moveRecord)

@@ -12,11 +12,11 @@ import SwiftData
 struct RecordView: View {
 
     // MARK: Data Shared With Me
-    @Query private var workouts: [WorkoutRecord]
+    @Query private var workouts: [Workout]
     @Environment(\.modelContext) var modelContext
-    @Binding var workoutRecord: WorkoutRecord?
+    @Binding var workoutRecord: Workout?
     // MARK: Data Owned By Me
-    @State private var recordToEdit: WorkoutRecord?
+    @State private var recordToEdit: Workout?
     
     var body: some View {
         List(selection: $workoutRecord) {
@@ -51,13 +51,13 @@ struct RecordView: View {
         }
     }
     
-    func editButton(for workout: WorkoutRecord) -> some View {
+    func editButton(for workout: Workout) -> some View {
         Button("edit", systemImage: "pencil") {
             recordToEdit = workout
         }
     }
     
-    func deleteButton(for workout: WorkoutRecord) -> some View {
+    func deleteButton(for workout: Workout) -> some View {
         Button("delete", systemImage: "minus") {
             modelContext.delete(workout)
         }
@@ -65,7 +65,7 @@ struct RecordView: View {
     
     var addButton: some View {
         Button("添加", systemImage: "plus") {
-            recordToEdit = WorkoutRecord()
+            recordToEdit = Workout()
         }
         .sheet(isPresented: showRecordEditor) {
             if let recordToEdit {
@@ -92,7 +92,7 @@ struct RecordView: View {
 }
 
 #Preview(traits: .swiftData) {
-    @Previewable @State var selection: WorkoutRecord?
+    @Previewable @State var selection: Workout?
     NavigationStack {
         RecordView(workoutRecord: $selection)
     }

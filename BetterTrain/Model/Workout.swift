@@ -9,12 +9,12 @@ import Foundation
 import SwiftData
 
 @Model
-class WorkoutRecord {
+class Workout {
     var targetMuscle: Muscle
     var time: Date
-    @Relationship(deleteRule: .cascade) var exercises: [MoveRecord]
+    @Relationship(deleteRule: .cascade) var exercises: [Move]
     
-    init(targetMuscle: Muscle = .chest, time: Date = .now, exercises: [MoveRecord] = []) {
+    init(targetMuscle: Muscle = .chest, time: Date = .now, exercises: [Move] = []) {
         self.targetMuscle = targetMuscle
         self.time = time
         self.exercises = exercises

@@ -14,7 +14,7 @@ struct RecordEditor: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: Data Shared With Me
-    @Bindable var record: WorkoutRecord
+    @Bindable var record: Workout
     
     // MARK: Action
     let onSave: () -> Void
@@ -34,7 +34,7 @@ struct RecordEditor: View {
                 // MARK: 动作列表
                 Section("训练动作") {
                     Button("添加动作", systemImage: "plus.circle") {
-                        record.exercises.append(MoveRecord())
+                        record.exercises.append(Move())
                     }
                     ForEach(record.exercises) { exercise in
                         NavigationLink {
@@ -72,6 +72,6 @@ struct RecordEditor: View {
 }
 
 #Preview(traits: .swiftData) {
-    @Previewable @State var myRecord = WorkoutRecord()
+    @Previewable @State var myRecord = Workout()
     RecordEditor(record: myRecord){}
 }
