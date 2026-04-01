@@ -21,30 +21,21 @@ struct MoveEditor: View {
         NavigationStack {
             Form {
                 TextField("动作名称", text: $move.exerciseName)
+                TextField("备注", text: $move.notes)
+                Toggle("自重训练", isOn: $move.isSelfWeight)
                 Button("添加一组", systemImage: "plus.circle") {
-                    setToEdit = Set(order: move.sets.count + 1)
+                    setToEdit = Set(order: move.sets.count + 1,
+                                    weight: move.setsSortedByOrder.last?.weight ?? 0,
+                                    reps: move.setsSortedByOrder.last?.reps ?? 8)
                 }
                 .sheet(isPresented: showSetEditorSheet) {
                     if let setToEdit {
-                        SetEditor(set: setToEdit) {
+                        SetEditor(set: setToEdit, isSelfWeightMove: move.isSelfWeight) {
                             move.sets.append(setToEdit)
                         }
                     }
                 }
-                ForEach(move.setsSortedByOrder) { set in
-                    HStack {
-                        Text("第\(set.order)组")
-                            .frame(width: 60, alignment: .leading)
-                        Text("\(set.weight, specifier: "%.2f") kg × \(set.reps) 次")
-                        Spacer()
-                        Text("RIR: \(set.rir)")
-                            .foregroundColor(set.isWarmup ? .gray : .primary)
-                    }
-                    .padding(8)
-                    .background(set.isWarmup ? Color.gray.opacity(0.2) : Color.blue.opacity(0.1))
-                    .cornerRadius(8)
-                }
-                
+                SetView(move: move, setToEdit: $setToEdit)
             }
             .navigationTitle("编辑动作")
             .toolbar {

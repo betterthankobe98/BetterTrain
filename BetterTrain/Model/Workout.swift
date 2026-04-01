@@ -22,7 +22,7 @@ class Workout {
     
     // 总容量
     var totalVolume: Double {
-        exercises.reduce(0) { $0 + $1.totalVolume }
+        exercises.compactMap { $0.totalVolume }.reduce(0) { $0 + $1 }
     }
     
     // 总有效组

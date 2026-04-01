@@ -11,6 +11,8 @@ struct SetEditor: View {
     
     // MARK: Data Shared With Me
     @Bindable var set: Set
+    // MARK: Data In
+    let isSelfWeightMove: Bool
     // MARK: Data (Function) In
     @Environment(\.dismiss) var dismiss
     // MARK: Action Function
@@ -23,18 +25,20 @@ struct SetEditor: View {
                     .font(.headline)
                 Toggle("热身组", isOn: $set.isWarmup)
                 HStack {
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("重量")
-                            Spacer()
-                            Text("\(set.weight, specifier: "%.1f") kg")
-                                .font(.headline)
+                    if !isSelfWeightMove {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Text("重量")
+                                Spacer()
+                                Text("\(set.weight ?? 0, specifier: "%.1f") kg")
+                                    .font(.headline)
+                            }
+                            Slider(
+                                value: $set.weightValue,
+                                in: 0...100,
+                                step: 2.5
+                            )
                         }
-                        Slider(
-                            value: $set.weight,
-                            in: 0...100,
-                            step: 2.5
-                        )
                     }
                 }
                 HStack {
@@ -75,5 +79,6 @@ struct SetEditor: View {
 }
 
 #Preview {
-    SetEditor(set: Set()){}
+    SetEditor(set: Set(), isSelfWeightMove: false){}
+    SetEditor(set: Set(), isSelfWeightMove: true){}
 }

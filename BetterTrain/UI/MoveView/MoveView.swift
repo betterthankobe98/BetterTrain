@@ -13,6 +13,7 @@ struct MoveView: View {
     @Bindable var exercise: Move
     // MARK: Data Owned By Me
     @State private var setToEdit: Set?
+    @FocusState private var notesFieldIsFocused: Bool
     
     var body: some View {
         ScrollView {
@@ -21,62 +22,64 @@ struct MoveView: View {
                     Text(exercise.exerciseName)
                         .font(.title)
                         .bold()
-                    Text("目标肌肉: " + exercise.targetMusclePart.map { $0.displayName }.joined(separator: ", "))
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+//                    Text("目标肌肉: " + exercise.targetMusclePart.map { $0.displayName }.joined(separator: ", "))
+//                        .font(.subheadline)
+//                        .foregroundColor(.secondary)
                 }
+                
                 Divider()
                 VStack(alignment: .leading, spacing: 8) {
                     Text("组信息")
                         .font(.headline)
-                    ForEach(exercise.setsSortedByOrder) { set in
-                        HStack {
-                            Text("第\(set.order)组")
-                                .frame(width: 60, alignment: .leading)
-                            Text("\(set.weight, specifier: "%.2f") kg × \(set.reps) 次")
-                            Spacer()
-                            Text("RIR: \(set.rir)")
-                                .foregroundColor(set.isWarmup ? .gray : .primary)
-                        }
-                        .contextMenu {
-                            editSetGroupButton(for: set)
-                            deleteSetGroupButton(for: set)
-                        }
-//                        .onDelete { indexSet in
-//                            exercise.sets.remove(atOffsets: indexSet)
-//                        }
-                        .swipeActions(edge: .leading) {
-                            editSetGroupButton(for: set)
-                        }
-                        .swipeActions(edge: .trailing) {
-                            deleteSetGroupButton(for: set)
-                        }
-                        .padding(8)
-                        .background(set.isWarmup ? Color.gray.opacity(0.2) : Color.blue.opacity(0.1))
-                        .cornerRadius(8)
-                    }
+                    SetView(move: exercise, setToEdit: $setToEdit)
                     addGroupButton(for: exercise.sets.count+1)
                         .padding(8)
                 }
                 Divider()
                 VStack(alignment: .leading, spacing: 8) {
+                    Text("动作备注")
+                        .font(.headline)
+                    ZStack(alignment: .topLeading) {
+                        TextEditor(text: $exercise.notes)
+                            .focused($notesFieldIsFocused)
+                            .lineLimit(5)
+                            .scrollContentBackground(.hidden)
+                            .padding(4)
+                    }
+                    .frame(minHeight: 80)
+                    .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(.systemGray6)) // ⭐️改成填充
+                    )
+                    .overlay {
+                        if exercise.notes.isEmpty {
+                            Text("请输入备注")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                Divider()
+                VStack(alignment: .leading, spacing: 8) {
                     Text("统计指标")
                         .font(.headline)
-                    HStack {
-                        Text("总容量:")
-                        Spacer()
-                        Text("\(exercise.totalVolume, specifier: "%.2f") kg")
+                    if !exercise.isSelfWeight {
+                        HStack {
+                            Text("总容量:")
+                            Spacer()
+                            Text("\(exercise.totalVolume ?? 0, specifier: "%.2f") kg")
+                        }
+                        HStack {
+                            Text("动作最大重量:")
+                            Spacer()
+                            Text("\(exercise.maxWeight ?? 0, specifier: "%.2f") kg")
+                        }
                     }
                     HStack {
                         Text("总次数:")
                         Spacer()
                         Text("\(exercise.totalReps) 次")
                     }
-                    HStack {
-                        Text("动作最大重量:")
-                        Spacer()
-                        Text("\(exercise.maxWeight, specifier: "%.2f") kg")
-                    }
+                    
 //                    HStack {
 //                        Text("动作极限重量估算 (PR) :")
 //                        Spacer()
@@ -101,6 +104,9 @@ struct MoveView: View {
                 Spacer()
             }
             .padding()
+            .onTapGesture {
+                notesFieldIsFocused = false
+            }
         }
         .navigationTitle("动作详情")
         .navigationBarTitleDisplayMode(.inline)
@@ -108,11 +114,13 @@ struct MoveView: View {
     
     func addGroupButton(for order: Int) -> some View {
         Button("添加一组", systemImage: "plus.circle"){
-            setToEdit = Set(order: order)
+            setToEdit = Set(order: order,
+                            weight: exercise.setsSortedByOrder.last?.weight ?? 0,
+                            reps: exercise.setsSortedByOrder.last?.reps ?? 8)
         }
         .sheet(isPresented: showSetEditorSheet) {
             if let setToEdit {
-                SetEditor(set: setToEdit) {
+                SetEditor(set: setToEdit, isSelfWeightMove: exercise.isSelfWeight) {
                     if exercise.sets.contains(setToEdit) {
                         exercise.sets.removeAll{ $0 == setToEdit }
                     }
@@ -133,17 +141,7 @@ struct MoveView: View {
         )
     }
     
-    func editSetGroupButton(for set: Set) -> some View {
-        Button("编辑", systemImage: "pencil") {
-            setToEdit = set
-        }
-    }
     
-    func deleteSetGroupButton(for set: Set) -> some View {
-        Button("删除", systemImage: "minus.circle") {
-            exercise.sets.removeAll { $0 == set }
-        }
-    }
 }
 
 #Preview(traits: .swiftData) {

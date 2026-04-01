@@ -14,19 +14,28 @@ class Move {
     var targetMusclePart: [MusclePart]
     var sets: [Set]
     var isSelfWeight: Bool
-    
-    init(targetMusclePart: [MusclePart] = [.chestMiddle], exerciseName: String = "", sets: [Set] = [], isSelfWeight: Bool = false) {
+    var notes: String
+
+    init(
+        targetMusclePart: [MusclePart] = [.chestMiddle],
+        exerciseName: String = "",
+        sets: [Set] = [],
+        isSelfWeight: Bool = false,
+        notes: String = ""
+    ) {
         self.targetMusclePart = targetMusclePart
         self.exerciseName = exerciseName
         self.sets = sets
         self.isSelfWeight = isSelfWeight
+        self.notes = notes
     }
     
-    // MARK: TODO 替换!
     // 动作总容量
     var totalVolume: Double? {
         guard !isSelfWeight else { return nil }
-        return sets.reduce(0) { $0 + $1.volume! }
+        return sets.compactMap{ $0.volume }.reduce(0) { partialResult, added in
+            partialResult + added
+        }
     }
     
     // 动作有效组数（最关键指标之一）
@@ -41,11 +50,10 @@ class Move {
         return Double(valid.reduce(0, +)) / Double(valid.count)
     }
     
-    // MARK: TODO 替换!
     // 动作最大重量
     var maxWeight: Double? {
         guard !isSelfWeight else { return nil }
-        return sets.map { $0.weight! }.max() ?? 0
+        return sets.compactMap { $0.weight }.max()
     }
     
     // 总次数（volume 的另一维）
@@ -65,8 +73,13 @@ class Move {
     // 推算PR:经典公式（Epley）
     var oneRepMaxEstimate: Double? {
         guard !isSelfWeight else { return nil }
-        guard let bestSet = sets.max(by: { $0.weight! < $1.weight! }) else { return 0 }
-        return bestSet.weight! * (1 + Double(bestSet.reps) / 30)
+
+        return sets
+            .compactMap { set -> Double? in
+                guard let weight = set.weight else { return nil }
+                return weight * (1 + Double(set.reps) / 30)
+            }
+            .max()
     }
     
     // 按组排序后的sets

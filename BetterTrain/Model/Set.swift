@@ -31,4 +31,9 @@ class Set {
             return nil
         }
     }
+    
+    var weightValue: Double {
+        get { weight ?? 0 }
+        set { weight = newValue }
+    }
 }

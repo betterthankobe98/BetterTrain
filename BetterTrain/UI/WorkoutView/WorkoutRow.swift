@@ -25,11 +25,13 @@ struct WorkoutRow: View {
 //                .foregroundColor(.secondary)
             // 核心指标
             HStack {
-                Text("容量: \(Int(move.totalVolume))")
-                Spacer()
                 Text("组数: \(move.sets.count)")
                 Spacer()
-                Text("最大: \(Int(move.maxWeight))kg")
+                if !move.isSelfWeight {
+                    Text("容量: \(Int(move.totalVolume ?? 0))")
+                    Spacer()
+                    Text("最大: \(Int(move.maxWeight ?? 0 ))kg")
+                }
             }
             .font(.caption)
         }
