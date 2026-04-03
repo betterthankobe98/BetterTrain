@@ -15,7 +15,7 @@ struct WorkoutRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // 动作名
-            Text(move.exerciseName.isEmpty ? "请编辑动作名称" : move.exerciseName)
+            Text(move.exercise.name.isEmpty ? "请编辑动作名称" : move.exercise.name)
                 .font(.headline)
             // 目标肌群
 //            Text(move.targetMusclePart
@@ -27,7 +27,7 @@ struct WorkoutRow: View {
             HStack {
                 Text("组数: \(move.sets.count)")
                 Spacer()
-                if !move.isSelfWeight {
+                if !move.exercise.isSelfWeight {
                     Text("容量: \(Int(move.totalVolume ?? 0))")
                     Spacer()
                     Text("最大: \(Int(move.maxWeight ?? 0 ))kg")
@@ -41,8 +41,7 @@ struct WorkoutRow: View {
 
 #Preview(traits: .swiftData) {
     WorkoutRow(move: Move(
-        targetMusclePart: [.chestMiddle, .chestOuter],
-        exerciseName: "杠铃平板卧推",
+        exercise:Exercise(name: "杠铃平板卧推"),
         sets: [
             Set(order: 1, isWarmup: true, weight: 40, reps: 12),
             Set(order: 2, isWarmup: false, weight: 60, reps: 10),

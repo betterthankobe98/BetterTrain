@@ -85,7 +85,7 @@ struct WorkoutView: View {
         
     var addButton: some View {
         Button("添加", systemImage: "plus") {
-            moveToEdit = Move()
+            moveToEdit = Move(exercise: Exercise(name: "请编辑名称"))
         }
         .sheet(isPresented: showMoveEditor) {
             if let moveToEdit {

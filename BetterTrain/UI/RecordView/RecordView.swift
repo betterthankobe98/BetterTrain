@@ -45,10 +45,6 @@ struct RecordView: View {
         }
         .listStyle(.plain)
         .navigationTitle("训练记录")
-        .onAppear {
-            guard workouts.isEmpty else { return }
-            modelContext.insert(MyInstance.workout1)
-        }
     }
     
     func editButton(for workout: Workout) -> some View {

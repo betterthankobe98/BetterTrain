@@ -29,19 +29,24 @@ struct RecordEditor: View {
                             Text(muscle.displayName).tag(muscle)
                         }
                     }
+                    .pickerStyle(.menu)
                     DatePicker("时间", selection: $record.time)
                 }
                 // MARK: 动作列表
                 Section("训练动作") {
                     Button("添加动作", systemImage: "plus.circle") {
-                        record.exercises.append(Move())
+                        record.exercises.append(
+                            Move(
+                                exercise: Exercise(name: "未命名动作")
+                            )
+                        )
                     }
                     ForEach(record.exercises) { exercise in
                         NavigationLink {
                             MoveEditor(move: exercise) { }
                         } label: {
                             VStack(alignment: .leading) {
-                                Text(exercise.exerciseName.isEmpty ? "请编辑动作" : exercise.exerciseName)
+                                Text(exercise.exercise.name.isEmpty ? "请编辑动作" : exercise.exercise.name)
                                 Text("共 \(exercise.sets.count) 组")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)

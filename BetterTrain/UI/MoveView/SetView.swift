@@ -20,7 +20,7 @@ struct SetView: View {
                 Text("第\(set.order)组")
                     .frame(width: 60, alignment: .leading)
                 Spacer()
-                if !move.isSelfWeight {
+                if !move.exercise.isSelfWeight {
                     Text("\(set.weightValue, specifier: "%.2f") kg × ")
                 }
                 Text("\(set.reps) 次")
@@ -63,30 +63,26 @@ struct SetView: View {
 #Preview {
     @Previewable @State var set: Set?
     SetView(move: Move(
-        targetMusclePart: [.chestMiddle, .chestOuter],
-        exerciseName: "杠铃平板卧推",
+        exercise: Exercise(name: "杠铃平板卧推"),
         sets: [
             Set(order: 1, isWarmup: true, weight: 40, reps: 12),
             Set(order: 2, isWarmup: false, weight: 60, reps: 10),
             Set(order: 3, isWarmup: false, weight: 65, reps: 8, rir: 3),
             Set(order: 4, isWarmup: false, weight: 65, reps: 8, rir: 2),
             Set(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
-        ],
-        isSelfWeight: false
+        ]
     ), setToEdit: $set)
     
     Divider()
     
     SetView(move: Move(
-        targetMusclePart: [.chestMiddle, .chestOuter],
-        exerciseName: "杠铃平板卧推",
+        exercise: Exercise(name: "杠铃平板卧推"),
         sets: [
             Set(order: 1, isWarmup: true, weight: 40, reps: 12),
             Set(order: 2, isWarmup: false, weight: 60, reps: 10),
             Set(order: 3, isWarmup: false, weight: 65, reps: 8, rir: 3),
             Set(order: 4, isWarmup: false, weight: 65, reps: 8, rir: 2),
             Set(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
-        ],
-        isSelfWeight: true
+        ]
     ), setToEdit: $set)
 }

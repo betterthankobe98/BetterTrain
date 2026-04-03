@@ -19,7 +19,7 @@ struct MoveView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(exercise.exerciseName)
+                    Text(exercise.exercise.name)
                         .font(.title)
                         .bold()
 //                    Text("目标肌肉: " + exercise.targetMusclePart.map { $0.displayName }.joined(separator: ", "))
@@ -62,7 +62,7 @@ struct MoveView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("统计指标")
                         .font(.headline)
-                    if !exercise.isSelfWeight {
+                    if !exercise.exercise.isSelfWeight {
                         HStack {
                             Text("总容量:")
                             Spacer()
@@ -120,7 +120,7 @@ struct MoveView: View {
         }
         .sheet(isPresented: showSetEditorSheet) {
             if let setToEdit {
-                SetEditor(set: setToEdit, isSelfWeightMove: exercise.isSelfWeight) {
+                SetEditor(set: setToEdit, isSelfWeightMove: exercise.exercise.isSelfWeight) {
                     if exercise.sets.contains(setToEdit) {
                         exercise.sets.removeAll{ $0 == setToEdit }
                     }
@@ -146,8 +146,7 @@ struct MoveView: View {
 
 #Preview(traits: .swiftData) {
     MoveView(exercise: Move(
-        targetMusclePart: [.chestMiddle, .chestOuter],
-        exerciseName: "杠铃平板卧推",
+        exercise: Exercise(name: "杠铃平板卧推"),
         sets: [
             Set(order: 1, isWarmup: true, weight: 40, reps: 12),
             Set(order: 2, isWarmup: false, weight: 60, reps: 10),

@@ -10,29 +10,23 @@ import SwiftData
 
 @Model
 class Move {
-    var exerciseName: String
-    var targetMusclePart: [MusclePart]
+    var exercise: Exercise
     var sets: [Set]
-    var isSelfWeight: Bool
     var notes: String
 
     init(
-        targetMusclePart: [MusclePart] = [.chestMiddle],
-        exerciseName: String = "",
+        exercise: Exercise,
         sets: [Set] = [],
-        isSelfWeight: Bool = false,
         notes: String = ""
     ) {
-        self.targetMusclePart = targetMusclePart
-        self.exerciseName = exerciseName
+        self.exercise = exercise
         self.sets = sets
-        self.isSelfWeight = isSelfWeight
         self.notes = notes
     }
     
     // 动作总容量
     var totalVolume: Double? {
-        guard !isSelfWeight else { return nil }
+        guard !exercise.isSelfWeight else { return nil }
         return sets.compactMap{ $0.volume }.reduce(0) { partialResult, added in
             partialResult + added
         }
@@ -52,7 +46,7 @@ class Move {
     
     // 动作最大重量
     var maxWeight: Double? {
-        guard !isSelfWeight else { return nil }
+        guard !exercise.isSelfWeight else { return nil }
         return sets.compactMap { $0.weight }.max()
     }
     
@@ -72,7 +66,7 @@ class Move {
     // MARK: TODO 替换!
     // 推算PR:经典公式（Epley）
     var oneRepMaxEstimate: Double? {
-        guard !isSelfWeight else { return nil }
+        guard !exercise.isSelfWeight else { return nil }
 
         return sets
             .compactMap { set -> Double? in
