@@ -22,7 +22,7 @@ class MyInstance{
                 ]
             ),
             Move(
-                exercise: Exercise(name: "杠铃平板卧推2"),
+                exercise: Exercise(name: "杠铃平板卧推2", isSelfWeight: true),
                 sets: [
                     Set(order: 1, isWarmup: true, weight: 40, reps: 12),
                     Set(order: 2, isWarmup: false, weight: 60, reps: 10),

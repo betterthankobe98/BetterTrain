@@ -24,10 +24,6 @@ struct RowIndex: View {
             }
             .padding(.vertical, 6)
             .frame(maxWidth: .infinity)
-            .background(
-                Capsule()
-                    .fill(Color(.systemGray6))
-            )
         }
 }
 

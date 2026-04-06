@@ -22,7 +22,7 @@ struct WorkoutListView: View {
     var body: some View {
         List(selection: $workoutRecord) {
             ForEach(workouts) { workout in
-                WordoutListRow(workout: workout)
+                WorkoutListRow(workout: workout)
                     .tag(workout)
                     .swipeActions(edge: .leading){
                         editButton(for: workout).tint(.accentColor) 

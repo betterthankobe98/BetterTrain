@@ -17,34 +17,7 @@ struct WorkoutView: View {
     var body: some View {
         List(selection: $move) {
             Section("总览") {
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("总容量")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            Text("\(Int(workout.totalVolume)) kg")
-                                .font(.headline)
-                        }
-                        Spacer()
-                        VStack(alignment: .leading) {
-                            Text("总组数")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            Text("\(workout.totalSets)")
-                                .font(.headline)
-                        }
-                        Spacer()
-                        VStack(alignment: .leading) {
-                            Text("总次数")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            Text("\(workout.totalReps)")
-                                .font(.headline)
-                        }
-                    }
-                }
-                .padding(.vertical, 8)
+                WorkoutIndex(workout: workout)
             }
             // ✅ 动作列表
             Section("动作") {
@@ -65,10 +38,9 @@ struct WorkoutView: View {
             }
         }
         .toolbar {
-            EditButton()
             addButton
         }
-        .navigationTitle("训练记录: \(workout.targetMuscle.displayName)")
+        .navigationTitle("\(workout.targetMuscle.displayName)训")
     }
     
     func editButton(for move: Move) -> some View {

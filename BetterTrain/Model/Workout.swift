@@ -25,11 +25,6 @@ class Workout {
         exercises.compactMap { $0.totalVolume }.reduce(0) { $0 + $1 }
     }
     
-    // 总有效组
-    var totalEffectiveSets: Int {
-        exercises.reduce(0) { $0 + $1.effectiveSetCount }
-    }
-    
     // 总次数
     var totalReps: Int {
         exercises.reduce(0) { $0 + $1.totalReps }

@@ -35,8 +35,6 @@ struct MoveEditor: View {
                     HStack {
                         TextField("新建动作名称", text: $inputText)
                         Button("新建", systemImage: "plus.circle") {
-//                            let trimmed = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
-//                            guard !trimmed.isEmpty else { return }  // ✅ 核心校验
                             exeToCreate = Exercise(name: inputText)
                             if let exeToCreate {
                                 modelContext.insert(exeToCreate)

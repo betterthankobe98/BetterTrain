@@ -66,12 +66,16 @@ struct SetView: View {
         exercise: Exercise(name: "杠铃平板卧推"),
         sets: [
             Set(order: 1, isWarmup: true, weight: 40, reps: 12),
-            Set(order: 2, isWarmup: false, weight: 60, reps: 10),
-            Set(order: 3, isWarmup: false, weight: 65, reps: 8, rir: 3),
-            Set(order: 4, isWarmup: false, weight: 65, reps: 8, rir: 2),
-            Set(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
+//            Set(order: 2, isWarmup: false, weight: 60, reps: 10),
+//            Set(order: 3, isWarmup: false, weight: 65, reps: 8, rir: 3),
+//            Set(order: 4, isWarmup: false, weight: 65, reps: 8, rir: 2),
+//            Set(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
         ]
     ), setToEdit: $set)
+    .overlay {
+        RoundedRectangle(cornerRadius: 10)
+            .opacity(0.2)
+    }
     
     Divider()
     
@@ -85,4 +89,8 @@ struct SetView: View {
             Set(order: 5, isWarmup: false, weight: 65, reps: 8, rir: 0)
         ]
     ), setToEdit: $set)
+    .overlay {
+        RoundedRectangle(cornerRadius: 10)
+            .opacity(0.2)
+    }
 }

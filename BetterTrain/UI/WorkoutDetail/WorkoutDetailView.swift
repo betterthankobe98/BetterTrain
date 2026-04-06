@@ -22,11 +22,7 @@ struct WorkoutDetailView: View {
                     Text(exercise.exercise.name)
                         .font(.title)
                         .bold()
-//                    Text("目标肌肉: " + exercise.targetMusclePart.map { $0.displayName }.joined(separator: ", "))
-//                        .font(.subheadline)
-//                        .foregroundColor(.secondary)
                 }
-                
                 Divider()
                 VStack(alignment: .leading, spacing: 8) {
                     Text("组信息")
@@ -79,27 +75,6 @@ struct WorkoutDetailView: View {
                         Spacer()
                         Text("\(exercise.totalReps) 次")
                     }
-                    
-//                    HStack {
-//                        Text("动作极限重量估算 (PR) :")
-//                        Spacer()
-//                        Text("\(exercise.oneRepMaxEstimate, specifier: "%.2f") kg")
-//                    }
-//                    HStack {
-//                        Text("有效组数 (RIR小于4) :")
-//                        Spacer()
-//                        Text("\(exercise.effectiveSetCount)")
-//                    }
-//                    HStack {
-//                        Text("平均 RIR（强度判断）:")
-//                        Spacer()
-//                        Text("\(exercise.averageRIR, specifier: "%.1f")")
-//                    }
-//                    HStack {
-//                        Text("疲劳掉速:")
-//                        Spacer()
-//                        Text("\(exercise.fatigueDrop) 次")
-//                    }
                 }
                 Spacer()
             }
