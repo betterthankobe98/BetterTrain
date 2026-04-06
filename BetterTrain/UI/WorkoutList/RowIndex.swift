@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct RecordRowIndex: View {
+struct RowIndex: View {
     
     // MARK: Data Share With Me
     let title: String
@@ -32,5 +32,5 @@ struct RecordRowIndex: View {
 }
 
 #Preview(traits: .swiftData) {
-    RecordRowIndex(title: "aa", value: "111")
+    RowIndex(title: "aa", value: "111")
 }

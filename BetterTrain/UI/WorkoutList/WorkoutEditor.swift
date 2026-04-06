@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct RecordEditor: View {
+struct WorkoutEditor: View {
     
     // MARK: Data (Function) In
     @Environment(\.dismiss) private var dismiss
@@ -78,5 +78,5 @@ struct RecordEditor: View {
 
 #Preview(traits: .swiftData) {
     @Previewable @State var myRecord = Workout()
-    RecordEditor(record: myRecord){}
+    WorkoutEditor(record: myRecord){}
 }

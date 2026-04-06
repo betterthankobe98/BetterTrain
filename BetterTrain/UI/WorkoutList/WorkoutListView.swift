@@ -9,19 +9,20 @@
 import SwiftUI
 import SwiftData
 
-struct RecordView: View {
+struct WorkoutListView: View {
 
     // MARK: Data Shared With Me
     @Query private var workouts: [Workout]
     @Environment(\.modelContext) var modelContext
     @Binding var workoutRecord: Workout?
+
     // MARK: Data Owned By Me
     @State private var recordToEdit: Workout?
     
     var body: some View {
         List(selection: $workoutRecord) {
             ForEach(workouts) { workout in
-                RecordRow(workout: workout)
+                WordoutListRow(workout: workout)
                     .tag(workout)
                     .swipeActions(edge: .leading){
                         editButton(for: workout).tint(.accentColor) 
@@ -30,8 +31,6 @@ struct RecordView: View {
                         editButton(for: workout)
                         deleteButton(for: workout)
                     }
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
             }
             .onDelete { offsets in
                 for offset in offsets {
@@ -40,7 +39,6 @@ struct RecordView: View {
             }
         }
         .toolbar {
-            EditButton()
             addButton
         }
         .listStyle(.plain)
@@ -65,7 +63,7 @@ struct RecordView: View {
         }
         .sheet(isPresented: showRecordEditor) {
             if let recordToEdit {
-                RecordEditor(record: recordToEdit) {
+                WorkoutEditor(record: recordToEdit) {
                     if workouts.contains(recordToEdit) {
                         modelContext.delete(recordToEdit)
                     }
@@ -90,6 +88,6 @@ struct RecordView: View {
 #Preview(traits: .swiftData) {
     @Previewable @State var selection: Workout?
     NavigationStack {
-        RecordView(workoutRecord: $selection)
+        WorkoutListView(workoutRecord: $selection)
     }
 }

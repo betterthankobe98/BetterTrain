@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MoveView: View {
+struct WorkoutDetailView: View {
     
     // MARK: Data Share With Me
     @Bindable var exercise: Move
@@ -145,7 +145,7 @@ struct MoveView: View {
 }
 
 #Preview(traits: .swiftData) {
-    MoveView(exercise: Move(
+    WorkoutDetailView(exercise: Move(
         exercise: Exercise(name: "杠铃平板卧推"),
         sets: [
             Set(order: 1, isWarmup: true, weight: 40, reps: 12),

@@ -16,8 +16,7 @@ struct HomeNavigate: View {
     
     var body: some View {
         NavigationSplitView {
-//            RecordView2(workoutRecord: $workoutSelection)
-            RecordView(workoutRecord: $workoutSelection)
+            WorkoutListView(workoutRecord: $workoutSelection)
         } content: {
             if let workoutSelection {
                 WorkoutView(workout: workoutSelection, move: $moveRecord)
@@ -26,7 +25,7 @@ struct HomeNavigate: View {
             }
         } detail: {
             if let moveRecord {
-                MoveView(exercise: moveRecord)
+                WorkoutDetailView(exercise: moveRecord)
             } else {
                 Text("请选择健身动作")
             }

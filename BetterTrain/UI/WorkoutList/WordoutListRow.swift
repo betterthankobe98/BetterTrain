@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct RecordRow: View {
+struct WordoutListRow: View {
     
     // MARK: Data Share With Me
     let workout: Workout
@@ -30,10 +30,10 @@ struct RecordRow: View {
             
             // 中间：统计数据
             HStack {
-                RecordRowIndex(title: "容量", value: "\(Int(workout.totalVolume))")
-                RecordRowIndex(title: "组数", value: "\(workout.totalSets)")
-                RecordRowIndex(title: "有效组", value: "\(workout.totalEffectiveSets)")
-                RecordRowIndex(title: "次数", value: "\(workout.totalReps)")
+                RowIndex(title: "容量", value: "\(Int(workout.totalVolume))")
+                RowIndex(title: "组数", value: "\(workout.totalSets)")
+                RowIndex(title: "有效组", value: "\(workout.totalEffectiveSets)")
+                RowIndex(title: "次数", value: "\(workout.totalReps)")
             }
         }
         .padding()
@@ -45,5 +45,5 @@ struct RecordRow: View {
 }
 
 #Preview(traits: .swiftData) {
-    RecordRow(workout: MyInstance.workout1)
+    WordoutListRow(workout: MyInstance.workout1)
 }
