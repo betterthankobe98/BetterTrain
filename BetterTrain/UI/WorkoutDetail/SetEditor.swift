@@ -80,5 +80,5 @@ struct SetEditor: View {
 
 #Preview {
     SetEditor(set: Set(), isSelfWeightMove: false){}
-    SetEditor(set: Set(), isSelfWeightMove: true){}
+//    SetEditor(set: Set(), isSelfWeightMove: true){}
 }

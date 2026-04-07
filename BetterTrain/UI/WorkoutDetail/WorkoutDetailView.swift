@@ -32,50 +32,9 @@ struct WorkoutDetailView: View {
                         .padding(8)
                 }
                 Divider()
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("动作备注")
-                        .font(.headline)
-                    ZStack(alignment: .topLeading) {
-                        TextEditor(text: $exercise.notes)
-                            .focused($notesFieldIsFocused)
-                            .lineLimit(5)
-                            .scrollContentBackground(.hidden)
-                            .padding(4)
-                    }
-                    .frame(minHeight: 80)
-                    .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color(.systemGray6)) // ⭐️改成填充
-                    )
-                    .overlay {
-                        if exercise.notes.isEmpty {
-                            Text("请输入备注")
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                }
+                NoteView(exercise: exercise, notesFieldIsFocused: $notesFieldIsFocused)
                 Divider()
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("统计指标")
-                        .font(.headline)
-                    if !exercise.exercise.isSelfWeight {
-                        HStack {
-                            Text("总容量:")
-                            Spacer()
-                            Text("\(exercise.totalVolume ?? 0, specifier: "%.2f") kg")
-                        }
-                        HStack {
-                            Text("动作最大重量:")
-                            Spacer()
-                            Text("\(exercise.maxWeight ?? 0, specifier: "%.2f") kg")
-                        }
-                    }
-                    HStack {
-                        Text("总次数:")
-                        Spacer()
-                        Text("\(exercise.totalReps) 次")
-                    }
-                }
+                StaticsView(exercise: exercise)
                 Spacer()
             }
             .padding()
