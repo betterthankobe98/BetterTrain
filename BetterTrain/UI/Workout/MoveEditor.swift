@@ -45,8 +45,10 @@ struct MoveEditor: View {
                         }
                         .foregroundStyle(isInputValid ? .blue : .secondary)
                         .disabled(inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                        .sheet(isPresented: showMoveCreated) {
-                            Text("创建成功")
+                        .alert("创建动作", isPresented: showMoveCreated) {
+                            Button("成功"){
+                                
+                            }
                         }
                     }
                 }
@@ -55,6 +57,12 @@ struct MoveEditor: View {
                         ForEach(exercises) { exe in
                             Text(exe.name)
                                 .tag(Optional(exe.id))
+                        }
+                    }
+                    .onChange(of: selectedExerciseID) { oldValue, newValue in
+                        guard let newValue else { return }
+                        if let exe = exercises.first(where: { $0.id == newValue }) {
+                            move.exercise = exe
                         }
                     }
                 }
@@ -83,6 +91,7 @@ struct MoveEditor: View {
                         onChoose()
                         dismiss()
                     }
+                    .disabled(move.exercise.name == "请编辑名称")
                 }
                 
                 ToolbarItem(placement: .cancellationAction) {
