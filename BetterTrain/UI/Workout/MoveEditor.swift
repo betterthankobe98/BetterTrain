@@ -66,23 +66,23 @@ struct MoveEditor: View {
                         }
                     }
                 }
-                Section("\(move.exercise.name)组信息") {
-                    TextField("备注", text: $move.notes)
-                    Toggle("自重训练", isOn: $move.exercise.isSelfWeight)
-                    Button("添加一组", systemImage: "plus.circle") {
-                        setToEdit = Set(order: move.sets.count + 1,
-                                        weight: move.setsSortedByOrder.last?.weight ?? 0,
-                                        reps: move.setsSortedByOrder.last?.reps ?? 8)
-                    }
-                    .sheet(isPresented: showSetEditorSheet) {
-                        if let setToEdit {
-                            SetEditor(set: setToEdit, isSelfWeightMove: move.exercise.isSelfWeight) {
-                                move.sets.append(setToEdit)
-                            }
-                        }
-                    }
-                    SetView(move: move, setToEdit: $setToEdit)
-                }
+//                Section("\(move.exercise.name)组信息") {
+//                    TextField("备注", text: $move.notes)
+//                    Toggle("自重训练", isOn: $move.exercise.isSelfWeight)
+//                    Button("添加一组", systemImage: "plus.circle") {
+//                        setToEdit = Set(order: move.sets.count + 1,
+//                                        weight: move.setsSortedByOrder.last?.weight ?? 0,
+//                                        reps: move.setsSortedByOrder.last?.reps ?? 8)
+//                    }
+//                    .sheet(isPresented: showSetEditorSheet) {
+//                        if let setToEdit {
+//                            SetEditor(set: setToEdit, isSelfWeightMove: move.exercise.isSelfWeight) {
+//                                move.sets.append(setToEdit)
+//                            }
+//                        }
+//                    }
+//                    SetView(move: move, setToEdit: $setToEdit)
+//                }
             }
             .navigationTitle("编辑动作")
             .toolbar {

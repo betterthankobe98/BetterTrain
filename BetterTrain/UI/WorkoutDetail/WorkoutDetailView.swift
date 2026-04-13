@@ -47,7 +47,7 @@ struct WorkoutDetailView: View {
     }
     
     func addGroupButton(for order: Int) -> some View {
-        Button("添加一组", systemImage: "plus.circle"){
+        Button("添加", systemImage: "plus.circle"){
             setToEdit = Set(order: order,
                             weight: exercise.setsSortedByOrder.last?.weight ?? 0,
                             reps: exercise.setsSortedByOrder.last?.reps ?? 8)

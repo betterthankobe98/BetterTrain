@@ -20,7 +20,7 @@ struct DayRowView: View {
             VStack(alignment: .leading) {
                 
                 if workouts.isEmpty {
-                    Text("无训练")
+                    Text("休息日")
                         .foregroundColor(.gray)
                         .font(.caption)
                 } else {
