@@ -9,6 +9,12 @@
 import SwiftUI
 import SwiftData
 
+extension WorkoutListView {
+    var workoutsInOrder: [Workout] {
+        workouts.sorted { $0.time < $1.time }
+    }
+}
+
 struct WorkoutListView: View {
 
     // MARK: Data Shared With Me
@@ -21,7 +27,7 @@ struct WorkoutListView: View {
     
     var body: some View {
         List(selection: $workoutRecord) {
-            ForEach(workouts) { workout in
+            ForEach(workoutsInOrder) { workout in
                 WorkoutListRow(workout: workout)
                     .tag(workout)
                     .swipeActions(edge: .leading){
@@ -31,6 +37,7 @@ struct WorkoutListView: View {
                         editButton(for: workout)
                         deleteButton(for: workout)
                     }
+                    .listRowSeparator(.hidden)
             }
             .onDelete { offsets in
                 for offset in offsets {
