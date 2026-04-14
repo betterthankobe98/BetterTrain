@@ -81,8 +81,8 @@ struct WorkoutView: View {
                 moveToEdit = nil
             }
         }
-
     }
+
 }
 
 #Preview(traits: .swiftData) {

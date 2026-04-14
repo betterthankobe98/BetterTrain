@@ -18,71 +18,57 @@ struct MoveEditor: View {
     // MARK: Action Function
     let onChoose: () -> Void
     // MARK: Data Owned By Me
-    @State private var setToEdit: Set?
-    @State private var selectedExerciseID: UUID?
+//    @State private var setToEdit: Set?
     @State private var inputText: String = ""
     @State private var isSelfWeight: Bool = false
-    @State private var exeToCreate: Exercise?
+//    @State private var exeToCreate: Exercise?
     
     var isInputValid: Bool {
         !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
+    var notContains: Bool {
+        exercises.allSatisfy { $0.name != inputText }
+    }
+    
+    var filteredExercises: [Exercise] {
+        if inputText.isEmpty { return exercises }
+        return exercises.filter {
+            $0.name.localizedCaseInsensitiveContains(inputText)
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             Form {
-                Section("新建训练动作") {
-                    HStack {
-                        TextField("新建动作名称", text: $inputText)
-                        Button("新建", systemImage: "plus.circle") {
-                            exeToCreate = Exercise(name: inputText)
-                            if let exeToCreate {
-                                modelContext.insert(exeToCreate)
-                                move.exercise = exeToCreate
-                                selectedExerciseID = exeToCreate.id
+                Section("动作名称") {
+                    TextField("搜索或创建动作", text: $inputText)
+
+                    if isInputValid && notContains {
+                        VStack(alignment: .leading) {
+                            Button("创建 \"\(inputText)\"") {
+                                let new = Exercise(name: inputText)
+                                new.isSelfWeight = isSelfWeight
+                                modelContext.insert(new)
+                                move.exercise = new
                             }
-                            inputText = ""
-                        }
-                        .foregroundStyle(isInputValid ? .blue : .secondary)
-                        .disabled(inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                        .alert("创建动作", isPresented: showMoveCreated) {
-                            Button("成功"){
-                                
-                            }
+                            Toggle("是否自重训练", isOn: $isSelfWeight)
                         }
                     }
                 }
-                Section(header: Text("请选择训练动作")) {
-                    Picker("请选择训练动作", selection: $selectedExerciseID) {
-                        ForEach(exercises) { exe in
-                            Text(exe.name)
-                                .tag(Optional(exe.id))
-                        }
-                    }
-                    .onChange(of: selectedExerciseID) { oldValue, newValue in
-                        guard let newValue else { return }
-                        if let exe = exercises.first(where: { $0.id == newValue }) {
-                            move.exercise = exe
-                        }
+
+                Section("已有动作") {
+                    ForEach(filteredExercises) { exe in
+                        Text(exe.name)
+                            .onTapGesture {
+                                move.exercise = exe
+                                inputText = exe.name
+                            }
+                            .swipeActions(edge: .trailing) {
+                                deleteButton(for: exe)
+                            }
                     }
                 }
-//                Section("\(move.exercise.name)组信息") {
-//                    TextField("备注", text: $move.notes)
-//                    Toggle("自重训练", isOn: $move.exercise.isSelfWeight)
-//                    Button("添加一组", systemImage: "plus.circle") {
-//                        setToEdit = Set(order: move.sets.count + 1,
-//                                        weight: move.setsSortedByOrder.last?.weight ?? 0,
-//                                        reps: move.setsSortedByOrder.last?.reps ?? 8)
-//                    }
-//                    .sheet(isPresented: showSetEditorSheet) {
-//                        if let setToEdit {
-//                            SetEditor(set: setToEdit, isSelfWeightMove: move.exercise.isSelfWeight) {
-//                                move.sets.append(setToEdit)
-//                            }
-//                        }
-//                    }
-//                    SetView(move: move, setToEdit: $setToEdit)
-//                }
             }
             .navigationTitle("编辑动作")
             .toolbar {
@@ -102,26 +88,12 @@ struct MoveEditor: View {
             }
         }
     }
-    
-    var showSetEditorSheet: Binding<Bool> {
-        Binding<Bool>  {
-            setToEdit != nil
-        } set: { newValue in
-            if !newValue {
-                setToEdit = nil
-            }
+    func deleteButton(for exe: Exercise) -> some View {
+        Button(role: .destructive) {
+            modelContext.delete(exe)
+        } label: {
+            Label("删除", systemImage: "trash")
         }
-    }
-    
-    var showMoveCreated: Binding<Bool> {
-        Binding<Bool>  {
-            exeToCreate != nil
-        } set: { newValue in
-            if !newValue {
-                exeToCreate = nil
-            }
-        }
-
     }
 }
 
