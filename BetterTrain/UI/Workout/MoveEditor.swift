@@ -18,10 +18,9 @@ struct MoveEditor: View {
     // MARK: Action Function
     let onChoose: () -> Void
     // MARK: Data Owned By Me
-//    @State private var setToEdit: Set?
     @State private var inputText: String = ""
     @State private var isSelfWeight: Bool = false
-//    @State private var exeToCreate: Exercise?
+    @State private var exeToEdit: Exercise?
     
     var isInputValid: Bool {
         !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -56,7 +55,6 @@ struct MoveEditor: View {
                         }
                     }
                 }
-
                 Section("已有动作") {
                     ForEach(filteredExercises) { exe in
                         Text(exe.name)
@@ -67,7 +65,15 @@ struct MoveEditor: View {
                             .swipeActions(edge: .trailing) {
                                 deleteButton(for: exe)
                             }
+                            .swipeActions(edge: .leading) {
+                                editButton(for: exe).tint(.accentColor)
+                            }
                     }
+                }
+            }
+            .sheet(item: $exeToEdit) { exe in
+                NavigationStack {
+                    ExeEditor(exe: exe)
                 }
             }
             .navigationTitle("编辑动作")
@@ -88,6 +94,7 @@ struct MoveEditor: View {
             }
         }
     }
+
     func deleteButton(for exe: Exercise) -> some View {
         Button(role: .destructive) {
             modelContext.delete(exe)
@@ -95,6 +102,13 @@ struct MoveEditor: View {
             Label("删除", systemImage: "trash")
         }
     }
+    
+    func editButton(for exe: Exercise) -> some View {
+        Button("编辑", systemImage: "pencil") {
+            exeToEdit = exe
+        }
+    }
+
 }
 
 #Preview(traits: .swiftData) {
