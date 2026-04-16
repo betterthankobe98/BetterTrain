@@ -58,7 +58,7 @@ struct SetEditor: View {
             .padding()
             .background(Color.gray.opacity(0.1))
             .cornerRadius(10)
-            .navigationTitle("编辑动作")
+            .navigationTitle("组信息")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("保存") {
